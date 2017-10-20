@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Firebase Database</title>
+<!-- for-mobile-apps -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.deep_orange-red.min.css" />
+<!-- Compiled and minified CSS -->
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+ <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+ <!-- Compiled and minified JavaScript -->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+ <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+
+
+</head>
+
+
+<body class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
+
+  <nav style="background-color:rgb(255,87,34)">
+     <div class="nav-wrapper" >
+       <h1 class="brand-logo center" >Firebase Database</h1>
+     </div>
+   </nav>
+<div >
+<div class="col-md-6" style="margin-top:10px">
+    <table class="table table-striped" style="background:rgb(255,87,34);">
+  <thead style="color:#fff;">
+    <tr>
+      <th >Email</th>
+      <th>Name</th>
+      <th>Age</th>
+    </tr>
+  </thead>
+  <tbody id="table_customers" style="background:#fff;">
+
+    <button onClick="add_customer_dialog()" id="show-dialog" type="button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--accent" style="margin-bottom:10px;">
+    <i class="material-icons">add</i>
+    <button onClick="delete_customer()" id="show-dialog-delete-customer" type="button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--accent" style="margin-bottom:10px;">
+    <i class="material-icons">delete</i>
+  </button>
+  </button>
+  </tbody>
+
+</table>
+</div>
+
+
+
+<div class="col-md-6" style="margin-top:10px">
+    <table class="table table-striped" style="background:rgb(255,87,34);">
+  <thead style="color:#fff;">
+    <tr>
+      <th >Email</th>
+      <th >Name</th>
+      <th>Age</th>
+    </tr>
+  </thead>
+  <tbody id="table_workers" style="background:#fff;">
+
+    <button onClick="add_worker_dialog()" id="show-dialog-worker" type="button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--accent" style="margin-bottom:10px;">
+    <i class="material-icons">add</i>
+  </button>
+  <button onClick="delete_worker_dialog()" id="show-dialog-delete-worker" type="button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--accent" style="margin-bottom:10px;">
+  <i class="material-icons">delete</i>
+</button>
+  </tbody>
+</table>
+</div>
+</div>
+
+ <dialog class="mdl-dialog" style="width:70%;" id="customer">
+   <h4 class="mdl-dialog__title">Add New Customer</h4>
+   <div class="mdl-dialog__content">
+     <form action="#">
+        <div class="mdl-textfield mdl-js-textfield">
+          <input class="mdl-textfield__input" type="text" id="cust_email">
+          <label class="mdl-textfield__label" for="sample1">Email</label>
+        </div>
+        <div class="mdl-textfield mdl-js-textfield">
+          <input class="mdl-textfield__input" type="text" id="cust_name">
+          <label class="mdl-textfield__label" for="sample1">Name</label>
+        </div>
+
+        <div class="mdl-textfield mdl-js-textfield">
+          <input class="mdl-textfield__input" type="text" id="cust_age">
+          <label class="mdl-textfield__label" for="sample1">Age</label>
+        </div>
+     </form>
+   </div>
+   <div class="mdl-dialog__actions mdl-dialog__actions--full-width">
+     <button id="add_customer" onclick="add_customer_db()" type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Add</button>
+   </div>
+ </dialog>
+
+ <dialog class="mdl-dialog" style="width:70%;" id="worker">
+   <h4 class="mdl-dialog__title">Add New Worker</h4>
+   <div class="mdl-dialog__content">
+     <form action="#">
+        <div class="mdl-textfield mdl-js-textfield">
+          <input class="mdl-textfield__input" type="text" id="worker_email">
+          <label class="mdl-textfield__label" for="sample1">Email</label>
+        </div>
+        <div class="mdl-textfield mdl-js-textfield">
+          <input class="mdl-textfield__input" type="text" id="worker_name">
+          <label class="mdl-textfield__label" for="sample1">Name</label>
+        </div>
+        <div class="mdl-textfield mdl-js-textfield">
+          <input class="mdl-textfield__input" type="text" id="worker_age">
+          <label class="mdl-textfield__label" for="sample1">Age</label>
+        </div>
+     </form>
+   </div>
+   <div class="mdl-dialog__actions mdl-dialog__actions--full-width">
+     <button id="add_worker" onclick="add_worker_db()" type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Add</button>
+   </div>
+ </dialog>
+
+ <dialog class="mdl-dialog" style="width:70%;" id="delete_worker">
+   <h4 class="mdl-dialog__title">Delete Worker</h4>
+   <div class="mdl-dialog__content">
+     <form action="#">
+        <div class="mdl-textfield mdl-js-textfield">
+          <input class="mdl-textfield__input" type="text" id="worker_email_delete">
+          <label class="mdl-textfield__label" for="sample1">Email</label>
+        </div>
+     </form>
+   </div>
+   <div class="mdl-dialog__actions mdl-dialog__actions--full-width">
+     <button id="delete_worker" onclick="delete_worker_db()" type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Add</button>
+   </div>
+ </dialog>
+
+ <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    
+<!--  step 1  initialize your firebase here -->
+<!--
+ <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
+ <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyCVwW1CdlexpGkPGgvo81lFptZlGP1U7-0",
+      authDomain: "tutorial-d21e5.firebaseapp.com",
+      databaseURL: "https://tutorial-d21e5.firebaseio.com",
+      projectId: "tutorial-d21e5",
+      storageBucket: "tutorial-d21e5.appspot.com",
+      messagingSenderId: "288838524294"
+    };
+    firebase.initializeApp(config);
+  </script>
+-->
+
+  <script src="index.js"></script>
+
+  </body>
+
+
+</html>
